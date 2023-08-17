@@ -1,5 +1,5 @@
 package com.xcale.ecommerce.domain.port;
-
+/*
 import com.xcale.ecommerce.infrastructure.database.entity.UserEntity;
 
 import java.util.Optional;
@@ -9,3 +9,5 @@ public interface UserPersistencePort {
 
     Optional<UserEntity> findByEmail(String email);
 }
+
+ */

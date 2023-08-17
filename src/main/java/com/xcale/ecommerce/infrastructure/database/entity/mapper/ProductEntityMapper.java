@@ -13,6 +13,7 @@ public interface ProductEntityMapper {
     @Mapping(target ="countInStock",source = "stock")
     @Mapping(target ="createdAt",expression = "java(java.time.LocalDateTime.now())")
     @Mapping(target ="updatedAt",expression = "java(java.time.LocalDateTime.now())")
+    @Mapping(target ="id",expression = "java(java.util.UUID.randomUUID())")
     ProductEntity toEntity(Product product);
 
     Product toDomain(ProductEntity productDto);

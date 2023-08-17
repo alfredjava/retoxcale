@@ -1,9 +1,8 @@
 package com.xcale.ecommerce.infrastructure.database.entity;
 
-
+/*
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.Id;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,12 +10,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-@Table(name = "user")
-@Getter
-@Setter
-@Builder(toBuilder = true)
+@Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "user")
 public class UserEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,3 +58,5 @@ public class UserEntity implements UserDetails {
         return true;
     }
 }
+
+ */

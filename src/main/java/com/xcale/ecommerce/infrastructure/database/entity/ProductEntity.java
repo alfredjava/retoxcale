@@ -1,20 +1,18 @@
 package com.xcale.ecommerce.infrastructure.database.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.Id;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Table(name = "product")
-@Getter
-@Setter
-@Builder(toBuilder = true)
+@Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "product")
 public class ProductEntity {
 
         @Id

@@ -1,5 +1,5 @@
 package com.xcale.ecommerce.infrastructure.security;
-
+/*
 import org.springframework.security.core.userdetails.UserDetails;
 
 public interface JwtService {
@@ -9,3 +9,5 @@ public interface JwtService {
 
     boolean isTokenValid(String token, UserDetails userDetails);
 }
+
+ */

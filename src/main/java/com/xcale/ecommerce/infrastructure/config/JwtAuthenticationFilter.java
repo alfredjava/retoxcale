@@ -1,6 +1,6 @@
 package com.xcale.ecommerce.infrastructure.config;
 
-
+/*
 import com.xcale.ecommerce.infrastructure.security.JwtService;
 import com.xcale.ecommerce.infrastructure.security.UserService;
 import jakarta.servlet.FilterChain;
@@ -54,3 +54,5 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 }
+
+ */

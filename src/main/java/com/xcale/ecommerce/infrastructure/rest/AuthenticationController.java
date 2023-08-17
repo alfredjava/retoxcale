@@ -1,6 +1,6 @@
 package com.xcale.ecommerce.infrastructure.rest;
 
-
+/*
 import com.xcale.ecommerce.infrastructure.model.request.SignUpRequest;
 import com.xcale.ecommerce.infrastructure.model.request.SigninRequest;
 import com.xcale.ecommerce.infrastructure.model.response.JwtAuthenticationResponse;
@@ -27,3 +27,5 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationService.signin(request));
     }
 }
+
+ */

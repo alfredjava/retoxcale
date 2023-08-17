@@ -1,5 +1,5 @@
 package com.xcale.ecommerce.infrastructure.security;
-
+/*
 
 import com.xcale.ecommerce.infrastructure.model.request.SignUpRequest;
 import com.xcale.ecommerce.infrastructure.model.request.SigninRequest;
@@ -10,3 +10,5 @@ public interface AuthenticationService {
 
     JwtAuthenticationResponse signin(SigninRequest request);
 }
+
+ */

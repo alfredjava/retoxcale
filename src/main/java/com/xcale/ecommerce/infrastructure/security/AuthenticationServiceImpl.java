@@ -1,5 +1,5 @@
 package com.xcale.ecommerce.infrastructure.security;
-
+/*
 
 import com.xcale.ecommerce.application.UserUseCase;
 import com.xcale.ecommerce.infrastructure.database.entity.RoleEntity;
@@ -39,3 +39,5 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return JwtAuthenticationResponse.builder().token(jwt).build();
     }
 }
+
+ */

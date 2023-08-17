@@ -1,6 +1,6 @@
 package com.xcale.ecommerce.infrastructure.security;
 
-
+/*
 import com.xcale.ecommerce.application.UserUseCase;
 import com.xcale.ecommerce.infrastructure.repository.UserJpaRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,3 +24,5 @@ public class UserServiceImpl implements UserService {
         };
     }
 }
+
+ */

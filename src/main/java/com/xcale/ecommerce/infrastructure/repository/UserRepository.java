@@ -1,5 +1,5 @@
 package com.xcale.ecommerce.infrastructure.repository;
-
+/*
 import com.xcale.ecommerce.domain.port.UserPersistencePort;
 import com.xcale.ecommerce.infrastructure.database.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
@@ -23,3 +23,5 @@ public class UserRepository implements UserPersistencePort {
         return Optional.ofNullable(userJpaRepository.findByEmail(email));
     }
 }
+
+ */

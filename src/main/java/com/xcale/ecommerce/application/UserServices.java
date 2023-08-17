@@ -1,5 +1,5 @@
 package com.xcale.ecommerce.application;
-
+/*
 import com.xcale.ecommerce.domain.port.UserPersistencePort;
 import com.xcale.ecommerce.infrastructure.database.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
@@ -20,3 +20,5 @@ public class UserServices implements UserUseCase{
                 .findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
     }
 }
+
+ */

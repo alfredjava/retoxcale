@@ -1,6 +1,6 @@
 package com.xcale.ecommerce.infrastructure.config;
 
-
+/*
 import com.xcale.ecommerce.infrastructure.security.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -55,3 +55,5 @@ public class SecurityConfiguration {
         return config.getAuthenticationManager();
     }
 }
+
+ */
