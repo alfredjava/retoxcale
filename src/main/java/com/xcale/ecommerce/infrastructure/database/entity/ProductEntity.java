@@ -17,6 +17,7 @@ public class ProductEntity {
 
         @Id
         private UUID id;
+        @Column(unique = true)
         private String name;
         private String description;
         private BigDecimal price;

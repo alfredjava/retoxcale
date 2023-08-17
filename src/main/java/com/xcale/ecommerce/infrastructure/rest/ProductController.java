@@ -2,6 +2,7 @@ package com.xcale.ecommerce.infrastructure.rest;
 
 import com.xcale.ecommerce.application.ProductUseCase;
 import com.xcale.ecommerce.domain.Product;
+import com.xcale.ecommerce.infrastructure.MyException;
 import com.xcale.ecommerce.infrastructure.rest.dto.ProductDto;
 import com.xcale.ecommerce.infrastructure.rest.mapper.ProductMapper;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,7 @@ public class ProductController {
 
     }
     @PostMapping
+    @Throws(MyException.class)
     public ResponseEntity<ProductDto> createProduct(@RequestBody Product product) {
         return ResponseEntity.ok(productMapper.toDto(
                 productUseCase.createProduct(product)));
