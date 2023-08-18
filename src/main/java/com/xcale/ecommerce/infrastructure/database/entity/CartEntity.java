@@ -1,32 +1,35 @@
 package com.xcale.ecommerce.infrastructure.database.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.UUID;
+import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "product")
-public class ProductEntity {
+@Table(name = "cart")
+public class CartEntity {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
-        @Column(unique = true)
-        private String name;
-        private String description;
-        private BigDecimal price;
-        private String image;
-        @Column(name = "count_in_stock")
-        private Integer countInStock;
+        private Double total;
+        @ManyToOne
+        private UserEntity userEntity;
         @Column(name = "created_at")
         private LocalDateTime createdAt;
         @Column(name = "updated_at")
         private LocalDateTime updatedAt;
+        @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
+        private List<CartDetailsEntity> cartDetailsEntities;
+
 }

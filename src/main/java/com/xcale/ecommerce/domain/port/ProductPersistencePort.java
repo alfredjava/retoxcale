@@ -7,7 +7,11 @@ import java.util.List;
 public interface ProductPersistencePort {
     Product createProduct(Product product);
 
+    Object saveAll(List<Product> products);
+
     Product findById(String id);
+
+    Product findByName(String name);
 
     Product update(Product product);
 

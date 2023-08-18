@@ -3,7 +3,7 @@ package com.xcale.ecommerce.infrastructure.repository;
 import com.xcale.ecommerce.domain.Product;
 import com.xcale.ecommerce.domain.port.ProductPersistencePort;
 import com.xcale.ecommerce.infrastructure.MyException;
-import com.xcale.ecommerce.infrastructure.database.dto.mapper.ProductEntityMapper;
+import com.xcale.ecommerce.infrastructure.database.entity.mapper.ProductEntityMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -18,10 +18,15 @@ import java.util.stream.Collectors;
 public class ProductRepository implements ProductPersistencePort {
 
     private final ProductJpaRepository productJpaRepository;
-    private final ProductEntityMapper productMapper;
+    private final ProductEntityMapper productEntityMapper;
     @Override
     public Product findById(String id) {
         return null;
+    }
+
+    @Override
+    public Product findByName(String name) {
+        return productEntityMapper.toDomain(productJpaRepository.findByName(name));
     }
 
     @Override
@@ -34,7 +39,7 @@ public class ProductRepository implements ProductPersistencePort {
     @Override
     public Product createProduct(Product product) {
         try {
-            return productMapper.toDomain(productJpaRepository.save(productMapper.toEntity(product)));
+            return productEntityMapper.toDomain(productJpaRepository.save(productEntityMapper.toEntity(product)));
         }catch (DataIntegrityViolationException data){
             log.error("Error creating product: product with name {}  exist", product.getName());
             throw new MyException("Error creating product: product with name "+ product.getName() +" exist", product.toString());
@@ -47,9 +52,15 @@ public class ProductRepository implements ProductPersistencePort {
     }
 
     @Override
+    public Object saveAll(List<Product> products) {
+        return productJpaRepository
+                .saveAll(products.stream().map(productEntityMapper::toEntity).collect(Collectors.toList()));
+    }
+
+    @Override
     public List<Product> findAll() {
         return productJpaRepository.findAll()
-                .stream().map(productMapper::toDomain).collect(Collectors.toList());
+                .stream().map(productEntityMapper::toDomain).collect(Collectors.toList());
     }
 
 

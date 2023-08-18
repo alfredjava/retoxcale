@@ -3,10 +3,12 @@ package com.xcale.ecommerce.infrastructure.rest;
 import com.xcale.ecommerce.application.ProductUseCase;
 import com.xcale.ecommerce.domain.Product;
 import com.xcale.ecommerce.infrastructure.MyException;
+import com.xcale.ecommerce.infrastructure.exception.Throws;
 import com.xcale.ecommerce.infrastructure.rest.dto.ProductDto;
 import com.xcale.ecommerce.infrastructure.rest.mapper.ProductMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,11 +24,18 @@ public class ProductController {
     private final ProductMapper productMapper;
 
     @GetMapping
-    public List<ResponseEntity<ProductDto>> findAll() {
-        return productUseCase.getAllProducts().stream()
-                .map(productMapper::toDto)
-                .map(ResponseEntity::ok)
-                .collect(Collectors.toList());
+    public ResponseEntity<List<ProductDto>> findAll() {
+        try {
+            List<ProductDto> listProductDto =  productUseCase.getAllProducts().stream()
+                    .map(products -> productMapper.toDto(products)).collect(Collectors.toList());
+
+            if (listProductDto.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(listProductDto, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
     }
     @PostMapping

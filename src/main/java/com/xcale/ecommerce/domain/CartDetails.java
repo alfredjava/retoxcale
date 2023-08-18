@@ -5,18 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-import java.util.UUID;
-
-
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Product {
-    private Long id;
-    private String name;
-    private String description;
-    private Integer stock;
+public class CartDetails {
+    private String product;
     private Double price;
+    private Integer quantity;
+    private Double total;
 }

@@ -1,4 +1,4 @@
-package com.xcale.ecommerce.infrastructure.database.dto.mapper;
+package com.xcale.ecommerce.infrastructure.database.entity.mapper;
 
 import com.xcale.ecommerce.domain.Product;
 import com.xcale.ecommerce.infrastructure.database.entity.ProductEntity;
@@ -13,8 +13,10 @@ public interface ProductEntityMapper {
     @Mapping(target ="countInStock",source = "stock")
     @Mapping(target ="createdAt",expression = "java(java.time.LocalDateTime.now())")
     @Mapping(target ="updatedAt",expression = "java(java.time.LocalDateTime.now())")
-    @Mapping(target ="id",expression = "java(java.util.UUID.randomUUID())")
+    //@Mapping(target ="id",expression = "java(java.util.UUID.randomUUID())")
     ProductEntity toEntity(Product product);
 
+    @Mapping(target ="stock",source = "countInStock")
+    @Mapping(target ="price",source = "price")
     Product toDomain(ProductEntity productDto);
 }

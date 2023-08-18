@@ -1,4 +1,4 @@
-package com.xcale.ecommerce.infrastructure.rest;
+package com.xcale.ecommerce.infrastructure.exception;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

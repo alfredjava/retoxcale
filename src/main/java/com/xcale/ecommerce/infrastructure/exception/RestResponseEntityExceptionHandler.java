@@ -1,4 +1,4 @@
-package com.xcale.ecommerce.infrastructure.rest;
+package com.xcale.ecommerce.infrastructure.exception;
 
 import com.xcale.ecommerce.infrastructure.MyException;
 import org.springframework.http.HttpHeaders;

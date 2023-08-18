@@ -2,6 +2,7 @@ package com.xcale.ecommerce.infrastructure.rest.dto;
 
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 
@@ -12,9 +13,9 @@ import java.util.UUID;
 @AllArgsConstructor
 
 public class ProductDto {
-    private UUID id;
+    private Long id;
     private String name;
     private String description;
-    private String price;
+    private BigDecimal price;
     private Integer stock;
 }
