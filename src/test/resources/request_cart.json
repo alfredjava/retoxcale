@@ -1,0 +1,15 @@
+{
+  "user": {
+    "email": "alfredfis@gmail.com"
+  },
+  "cartDetails": [
+    {
+      "product": "iphone13",
+      "quantity": 1
+    },
+    {
+      "product": "iphone14",
+      "quantity": 4
+    }
+  ]
+}

@@ -2,18 +2,14 @@ package com.xcale.ecommerce.infrastructure.rest;
 
 import com.xcale.ecommerce.application.CartUseCase;
 import com.xcale.ecommerce.domain.Cart;
-import com.xcale.ecommerce.domain.Product;
 import com.xcale.ecommerce.infrastructure.MyException;
 import com.xcale.ecommerce.infrastructure.exception.Throws;
-import com.xcale.ecommerce.infrastructure.rest.dto.ProductDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -36,8 +32,6 @@ public class CartController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-
     }
 
     @GetMapping("/{id}")
