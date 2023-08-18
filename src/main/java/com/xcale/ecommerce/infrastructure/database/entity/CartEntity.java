@@ -29,7 +29,7 @@ public class CartEntity {
         private LocalDateTime createdAt;
         @Column(name = "updated_at")
         private LocalDateTime updatedAt;
-        @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
+        @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart",fetch = FetchType.LAZY)
         private List<CartDetailsEntity> cartDetailsEntities;
 
 }
