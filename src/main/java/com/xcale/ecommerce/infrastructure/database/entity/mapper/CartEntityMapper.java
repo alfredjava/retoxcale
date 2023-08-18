@@ -71,7 +71,7 @@ public abstract class CartEntityMapper {
     @Mapping(target = "product", source = "product", qualifiedByName = "setProduct")
     @Mapping(target ="createdAt",expression = "java(java.time.LocalDateTime.now())")
     @Mapping(target ="updatedAt",expression = "java(java.time.LocalDateTime.now())")
-    @Mapping(target = "amount", expression = "java(cartDetails.getPrice()*cartDetails.getQuantity())")
+    @Mapping(target = "total", expression = "java(cartDetails.getPrice()*cartDetails.getQuantity())")
     public abstract CartDetailsEntity cartLineToItem(CartDetails cartDetails) ;
 
     @Named("setProduct")
@@ -108,8 +108,9 @@ public abstract class CartEntityMapper {
 
     }
     @Mapping(target = "product", source = "product.name")
-    @Mapping(target = "price", source = "amount")
+    @Mapping(target = "price", source = "price")
     @Mapping(target = "quantity", source = "quantity")
+    @Mapping(target = "total", source = "total")
     public abstract CartDetails cartLineToItemDomain(CartDetailsEntity cartDetailsEntity);
 
 }

@@ -1,18 +1,17 @@
 package com.xcale.ecommerce.infrastructure.database.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Cascade;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Data
+
 @Builder
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -26,7 +25,8 @@ public class CartDetailsEntity {
         @JoinColumn(name = "product_id",referencedColumnName = "id")
         private ProductEntity product;
         private Integer quantity;
-        private Double amount;
+        private Double price;
+        private Double total;
         @Column(name = "created_at")
         private LocalDateTime createdAt;
         @Column(name = "updated_at")

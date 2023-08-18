@@ -1,4 +1,4 @@
-# reto-ecommer
+# reto-ecommerce
 # Spring Web API REST with H2 Database with architecture hexagonal
 
 This is a simple example of a Spring Web 3.1.2 API REST application that uses an H2 in-memory database. The application demonstrates basic CRUD (Create, Read, Update, Delete) operations for a resource.
@@ -12,6 +12,7 @@ This is a simple example of a Spring Web 3.1.2 API REST application that uses an
 
 - Spring Boot 3.1.2
 - Spring Web
+- Spring quartz
 - H2 Database (In-memory)
 
 ## Getting Started

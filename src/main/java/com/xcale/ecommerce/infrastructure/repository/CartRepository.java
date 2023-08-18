@@ -4,6 +4,7 @@ import com.xcale.ecommerce.domain.Cart;
 import com.xcale.ecommerce.domain.User;
 import com.xcale.ecommerce.domain.port.CartPersistencePort;
 import com.xcale.ecommerce.infrastructure.MyException;
+import com.xcale.ecommerce.infrastructure.database.entity.CartDetailsEntity;
 import com.xcale.ecommerce.infrastructure.database.entity.CartEntity;
 import com.xcale.ecommerce.infrastructure.database.entity.UserEntity;
 import com.xcale.ecommerce.infrastructure.database.entity.mapper.CartEntityMapper;
@@ -13,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 
@@ -46,7 +48,7 @@ public class CartRepository implements CartPersistencePort {
             cartEntity = cartJpaRepository.save(cartEntityMapper.toEntity(cart));
 
             CartEntity finalCartEntity = cartEntity;
-            cartDetailsJpaRepository.saveAll(cartEntityMapper.setDetails(cart.getCartDetails()).stream()
+            List<CartDetailsEntity> listCartDet = cartDetailsJpaRepository.saveAll(cartEntityMapper.setDetails(cart.getCartDetails()).stream()
                     .map(cartDetailsEntity -> {
                         cartDetailsEntity.setCart(finalCartEntity);
                         //update stock.
@@ -55,7 +57,7 @@ public class CartRepository implements CartPersistencePort {
 
                         return cartDetailsEntity;
                     }).collect(Collectors.toList()));
-
+            cartEntity.setCartDetailsEntities(listCartDet);
             return cartEntityMapper.toDomain(cartEntity);
         }catch (Exception e){
             log.error("Error creating car: {}", e.getMessage());

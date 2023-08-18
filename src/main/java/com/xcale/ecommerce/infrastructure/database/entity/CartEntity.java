@@ -1,18 +1,17 @@
 package com.xcale.ecommerce.infrastructure.database.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Data
+
 @Builder
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -29,7 +28,7 @@ public class CartEntity {
         private LocalDateTime createdAt;
         @Column(name = "updated_at")
         private LocalDateTime updatedAt;
-        @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart",fetch = FetchType.LAZY)
+        @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
         private List<CartDetailsEntity> cartDetailsEntities;
 
 }
