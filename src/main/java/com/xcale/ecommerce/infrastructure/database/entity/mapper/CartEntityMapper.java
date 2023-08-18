@@ -18,6 +18,7 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -96,6 +97,9 @@ public abstract class CartEntityMapper {
     @Mapping(target = "user.id", source = "userEntity.id")
     @Mapping(target = "user.email", source = "userEntity.email")
     @Mapping(target = "cartDetails", source = "cartDetailsEntities",qualifiedByName = "mapDetailsCartDomain")
+    @Mapping(target = "createdAt", source = "createdAt")
+    @Mapping(target = "updatedAt", source = "updatedAt")
+    @Mapping(target = "id", source = "id")
     public abstract Cart toDomain(CartEntity cartEntity);
 
 

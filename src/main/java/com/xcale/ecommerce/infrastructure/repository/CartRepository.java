@@ -33,7 +33,7 @@ public class CartRepository implements CartPersistencePort {
 
 
     @Override
-    @Transactional(readOnly = false)
+    @Transactional()
     public Cart saveCart(Cart cart) {
         try {
 
@@ -68,5 +68,23 @@ public class CartRepository implements CartPersistencePort {
     @Override
     public Cart getCartById(Long id) {
         return cartEntityMapper.toDomain(cartJpaRepository.findById(id).orElse(null));
+    }
+
+    @Override
+    public List<Cart> listAll() {
+        return cartJpaRepository.findAll()
+                .stream().map(this.cartEntityMapper::toDomain).collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional()
+    public void deleteById(Long id) {
+        try {
+
+            cartJpaRepository.delete(cartJpaRepository.findById(id).get());
+        }
+        catch (Exception e){
+            throw new MyException("Error when delete cart by id"+ id, e.getMessage());
+        }
     }
 }

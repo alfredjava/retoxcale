@@ -1,43 +1,48 @@
 package com.xcale.ecommerce.infrastructure.repository;
 
+import com.xcale.ecommerce.domain.Cart;
 import com.xcale.ecommerce.infrastructure.database.entity.CartEntity;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Service
-@AllArgsConstructor
+@RequiredArgsConstructor
+@Component
 @Slf4j
 public class CartService {
-    private static final long INACTIVITY_THRESHOLD = 1 * 60 * 1000; // 10 minutes in milliseconds
 
+    private final CartRepository cartRepository;
 
-    private final CartJpaRepository cartJpaRepository;
-    @Scheduled(fixedDelay = INACTIVITY_THRESHOLD)
+    @Value("${cron.in-minute-remove-cart-inactive}")
+    private int timeInMinuteRemoveCartInactive;
+
+    @Scheduled(cron = "${cron.expression}")
     public void deleteInactiveCarts() {
-
+        log.info("Execution mode first second of each minute cron expression {}","${cron.expression}");
 
         LocalDateTime now = LocalDateTime.now();
 
         // Restar 10 minutos a la fecha y hora actual
-        LocalDateTime newDateTime = now.minusMinutes(10);
+        LocalDateTime newDateTime = now.minusMinutes(timeInMinuteRemoveCartInactive);
         try{
-            List<CartEntity> listCart = cartJpaRepository.findAll();
+            List<Cart> listCart = cartRepository.listAll();
 
-            listCart.stream().map(cartEntity -> {
+            listCart.stream().forEach(cart -> {
 
 
-                if (newDateTime.compareTo(cartEntity.getUpdatedAt()) <= 0){
+                if (newDateTime.compareTo(cart.getUpdatedAt()) >= 0){
+                    log.info("The cart {} will be deleted due to inactivity {} in minutes",cart.getId(),timeInMinuteRemoveCartInactive);
                     // Lógica para eliminar carritos inactivos aquí
-                    cartJpaRepository.delete(cartEntity);
+                    cartRepository.deleteById(cart.getId());
                 }
-
-                return null;
             });
         }catch (Exception e){
             log.error(e.getMessage());

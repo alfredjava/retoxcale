@@ -30,6 +30,7 @@ public class Cart {
      ]
      }
      */
+    private Long id;
     private User user;
     private Double total;
     private LocalDateTime createdAt;
