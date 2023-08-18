@@ -5,7 +5,7 @@ This is a simple example of a Spring Web 3.1.2 API REST application that uses an
 
 ## Prerequisites
 
-- Java 11 or higher
+- Java 17 or higher
 - Maven
 
 ## Technologies Used
