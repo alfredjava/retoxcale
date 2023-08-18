@@ -93,6 +93,23 @@ public abstract class CartEntityMapper {
     }
 
 
-
+    @Mapping(target = "user.id", source = "userEntity.id")
+    @Mapping(target = "user.email", source = "userEntity.email")
+    @Mapping(target = "cartDetails", source = "cartDetailsEntities",qualifiedByName = "mapDetailsCartDomain")
     public abstract Cart toDomain(CartEntity cartEntity);
+
+
+    @Named("mapDetailsCartDomain")
+    public List<CartDetails> mapDetailsCartDomain(List<CartDetailsEntity> cartDetailsEntities){
+        if (cartDetailsEntities == null){
+            return Collections.emptyList();
+        }
+        return cartDetailsEntities.stream().map(this::cartLineToItemDomain).collect(Collectors.toList());
+
+    }
+    @Mapping(target = "product", source = "product.name")
+    @Mapping(target = "price", source = "amount")
+    @Mapping(target = "quantity", source = "quantity")
+    public abstract CartDetails cartLineToItemDomain(CartDetailsEntity cartDetailsEntity);
+
 }

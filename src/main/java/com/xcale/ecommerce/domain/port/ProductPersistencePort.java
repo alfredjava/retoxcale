@@ -16,4 +16,6 @@ public interface ProductPersistencePort {
     Product update(Product product);
 
     List<Product> findAll();
+
+    void updateStock(Long id, Integer quantity);
 }

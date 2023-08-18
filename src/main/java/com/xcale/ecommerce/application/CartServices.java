@@ -14,4 +14,9 @@ public class CartServices implements CartUseCase {
     public Cart addCart(Cart cart) {
         return cartPersistencePort.saveCart(cart);
     }
+
+    @Override
+    public Cart getCartById(Long id) {
+        return cartPersistencePort.getCartById(id);
+    }
 }

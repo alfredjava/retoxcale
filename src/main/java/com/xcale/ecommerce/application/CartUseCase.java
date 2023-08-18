@@ -4,4 +4,5 @@ import com.xcale.ecommerce.domain.Cart;
 
 public interface CartUseCase {
     Cart addCart(Cart cart);
+    Cart getCartById (Long id);
 }

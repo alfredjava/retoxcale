@@ -3,6 +3,7 @@ package com.xcale.ecommerce.infrastructure.repository;
 import com.xcale.ecommerce.domain.Product;
 import com.xcale.ecommerce.domain.port.ProductPersistencePort;
 import com.xcale.ecommerce.infrastructure.MyException;
+import com.xcale.ecommerce.infrastructure.database.entity.ProductEntity;
 import com.xcale.ecommerce.infrastructure.database.entity.mapper.ProductEntityMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -61,6 +62,18 @@ public class ProductRepository implements ProductPersistencePort {
     public List<Product> findAll() {
         return productJpaRepository.findAll()
                 .stream().map(productEntityMapper::toDomain).collect(Collectors.toList());
+    }
+
+    @Override
+    public void updateStock(Long id, Integer quantity) {
+        ProductEntity productEntity = productJpaRepository.findById(id).get();
+
+        if (productEntity.getCountInStock() - quantity < 0) {
+            throw new MyException("There is not enough stock in the product  " +productEntity.getName(),"");
+        }
+
+        productEntity.setCountInStock(productEntity.getCountInStock() - quantity);
+        productJpaRepository.save(productEntity);
     }
 
 
