@@ -34,6 +34,7 @@ public class ProductController {
             }
             return new ResponseEntity<>(listProductDto, HttpStatus.OK);
         } catch (Exception e) {
+            log.error("Error in findAll", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 

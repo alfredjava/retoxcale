@@ -6,9 +6,9 @@ import com.xcale.ecommerce.application.ProductServices;
 import com.xcale.ecommerce.application.ProductUseCase;
 import com.xcale.ecommerce.domain.port.CartPersistencePort;
 import com.xcale.ecommerce.domain.port.ProductPersistencePort;
-import com.xcale.ecommerce.infrastructure.database.entity.mapper.CartEntityMapper;
 import com.xcale.ecommerce.infrastructure.database.entity.mapper.ProductEntityMapper;
 import com.xcale.ecommerce.infrastructure.database.entity.mapper.UserEntityMapper;
+import com.xcale.ecommerce.infrastructure.rest.mapper.CartMapper;
 import com.xcale.ecommerce.infrastructure.rest.mapper.ProductMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,6 +38,11 @@ public class BeanConfig {
     @Bean
     public CartUseCase cartUseCase(CartPersistencePort cartPersistencePort){
         return new CartServices(cartPersistencePort);
+    }
+
+    @Bean
+    public CartMapper cartMapper(){
+        return CartMapper.INSTANCE;
     }
 
 }

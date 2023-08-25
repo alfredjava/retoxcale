@@ -2,11 +2,12 @@ package com.xcale.ecommerce.infrastructure.rest;
 
 import com.xcale.ecommerce.application.CartUseCase;
 import com.xcale.ecommerce.domain.Cart;
-import com.xcale.ecommerce.domain.User;
 import com.xcale.ecommerce.infrastructure.MyException;
+import com.xcale.ecommerce.infrastructure.rest.dto.CartDto;
+import com.xcale.ecommerce.infrastructure.rest.mapper.CartMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,12 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class CartControllerTest {
+    @Mock
+    private CartMapper cartMapper;
+    @BeforeEach
+    public void init(){
+        cartMapper =   mock(CartMapper.class);
+    }
     @Test
     void createCart() throws IOException {
 
@@ -29,14 +36,15 @@ class CartControllerTest {
         Cart cart = readDataFromFile("request_cart.json",Cart.class); // Crear un objeto Cart para usar en las pruebas
         when(cartUseCase.addCart(any(Cart.class))).thenReturn(cart);
 
-        CartController cartController = new CartController(cartUseCase);
-
+        CartController cartController = new CartController(cartUseCase,cartMapper);
+        CartDto cartDto = CartDto.builder().id(1L).build();
+        when(cartMapper.toDto(cart)).thenReturn(cartDto);
         // Act
-        ResponseEntity<Cart> response = cartController.createCart(cart);
+        ResponseEntity<CartDto> response = cartController.createCart(cart);
 
         // Assert
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals(cart, response.getBody());
+        assertEquals(cartDto.getId(), response.getBody().getId());
     }
 
     @Test
@@ -45,10 +53,10 @@ class CartControllerTest {
         CartUseCase cartUseCase = mock(CartUseCase.class);
         when(cartUseCase.addCart(any(Cart.class))).thenReturn(null);
 
-        CartController cartController = new CartController(cartUseCase);
+        CartController cartController = new CartController(cartUseCase,cartMapper);
 
         // Act
-        ResponseEntity<Cart> response = cartController.createCart(new Cart());
+        ResponseEntity<CartDto> response = cartController.createCart(new Cart());
 
         // Assert
         assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
@@ -60,10 +68,10 @@ class CartControllerTest {
         CartUseCase cartUseCase = mock(CartUseCase.class);
         when(cartUseCase.addCart(any(Cart.class))).thenThrow(new MyException("Error save",""));
 
-        CartController cartController = new CartController(cartUseCase);
+        CartController cartController = new CartController(cartUseCase,cartMapper);
 
         // Act
-        ResponseEntity<Cart> response = cartController.createCart(new Cart());
+        ResponseEntity<CartDto> response = cartController.createCart(new Cart());
 
         // Assert
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
@@ -76,14 +84,15 @@ class CartControllerTest {
         Cart cart = new Cart(); // Crear un objeto Cart para usar en las pruebas
         when(cartUseCase.getCartById(cartId)).thenReturn(cart);
 
-        CartController cartController = new CartController(cartUseCase);
-
+        CartController cartController = new CartController(cartUseCase,cartMapper);
+        CartDto cartDto = CartDto.builder().id(1L).build();
+        when(cartMapper.toDto(cart)).thenReturn(cartDto);
         // Act
-        ResponseEntity<Cart> response = cartController.findAll(cartId);
+        ResponseEntity<CartDto> response = cartController.findAll(cartId);
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(cart, response.getBody());
+        assertEquals(cartDto.getId(), response.getBody().getId());
     }
 
     @Test
@@ -93,10 +102,10 @@ class CartControllerTest {
         CartUseCase cartUseCase = mock(CartUseCase.class);
         when(cartUseCase.getCartById(cartId)).thenReturn(null);
 
-        CartController cartController = new CartController(cartUseCase);
+        CartController cartController = new CartController(cartUseCase,cartMapper);
 
         // Act
-        ResponseEntity<Cart> response = cartController.findAll(cartId);
+        ResponseEntity<CartDto> response = cartController.findAll(cartId);
 
         // Assert
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
@@ -109,10 +118,10 @@ class CartControllerTest {
         CartUseCase cartUseCase = mock(CartUseCase.class);
         when(cartUseCase.getCartById(cartId)).thenThrow(new RuntimeException());
 
-        CartController cartController = new CartController(cartUseCase);
+        CartController cartController = new CartController(cartUseCase,cartMapper);
 
         // Act
-        ResponseEntity<Cart> response = cartController.findAll(cartId);
+        ResponseEntity<CartDto> response = cartController.findAll(cartId);
 
         // Assert
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
