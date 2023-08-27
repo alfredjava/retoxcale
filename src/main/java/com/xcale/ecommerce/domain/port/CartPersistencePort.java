@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface CartPersistencePort {
     Cart saveCart(Cart cart);
-    Cart getCartById (Long id);
+    Cart findById (Long id);
 
-    List<Cart> listAll();
+    List<Cart> findAll();
     void deleteById (Long id);
 }

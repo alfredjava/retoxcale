@@ -18,7 +18,7 @@ public class ProductServices implements ProductUseCase{
     }
 
     @Override
-    public Product getProductById(String id) {
+    public Product getProductById(Long id) {
         return productPersistencePort.findById(id);
     }
 

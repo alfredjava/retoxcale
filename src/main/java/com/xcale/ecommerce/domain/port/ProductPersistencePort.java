@@ -9,7 +9,7 @@ public interface ProductPersistencePort {
 
     Object saveAll(List<Product> products);
 
-    Product findById(String id);
+    Product findById(Long id);
 
     Product findByName(String name);
 

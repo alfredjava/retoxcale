@@ -33,7 +33,7 @@ public class CartService {
         // Restar 10 minutos a la fecha y hora actual
         LocalDateTime newDateTime = now.minusMinutes(timeInMinuteRemoveCartInactive);
         try{
-            List<Cart> listCart = cartRepository.listAll();
+            List<Cart> listCart = cartRepository.findAll();
 
             listCart.stream().forEach(cart -> {
 

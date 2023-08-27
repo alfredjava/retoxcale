@@ -16,7 +16,7 @@ public class CartServices implements CartUseCase {
     }
 
     @Override
-    public Cart getCartById(Long id) {
-        return cartPersistencePort.getCartById(id);
+    public Cart findById(Long id) {
+        return cartPersistencePort.findById(id);
     }
 }

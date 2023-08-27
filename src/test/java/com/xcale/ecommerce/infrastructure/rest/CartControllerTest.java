@@ -3,6 +3,7 @@ package com.xcale.ecommerce.infrastructure.rest;
 import com.xcale.ecommerce.application.CartUseCase;
 import com.xcale.ecommerce.domain.Cart;
 import com.xcale.ecommerce.infrastructure.MyException;
+import com.xcale.ecommerce.infrastructure.rest.dto.CartDetailsDto;
 import com.xcale.ecommerce.infrastructure.rest.dto.CartDto;
 import com.xcale.ecommerce.infrastructure.rest.mapper.CartMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.xcale.ecommerce.infrastructure.rest.TestUtils.readDataFromFile;
 import static org.junit.jupiter.api.Assertions.*;
@@ -37,7 +40,12 @@ class CartControllerTest {
         when(cartUseCase.addCart(any(Cart.class))).thenReturn(cart);
 
         CartController cartController = new CartController(cartUseCase,cartMapper);
-        CartDto cartDto = CartDto.builder().id(1L).build();
+        CartDetailsDto cartDetailsDto = CartDetailsDto.builder().price(10.0).total(100.0)
+                .build();
+        List<CartDetailsDto> listCa = new ArrayList<>() ;
+        listCa.add(cartDetailsDto);
+        CartDto cartDto = CartDto.builder().id(1L).cartDetailsDto(listCa).
+        build();
         when(cartMapper.toDto(cart)).thenReturn(cartDto);
         // Act
         ResponseEntity<CartDto> response = cartController.createCart(cart);
@@ -45,6 +53,8 @@ class CartControllerTest {
         // Assert
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals(cartDto.getId(), response.getBody().getId());
+        assertEquals(cartDto.getCartDetailsDto().get(0).getPrice(),
+                response.getBody().getCartDetailsDto().get(0).getPrice());
     }
 
     @Test
@@ -82,7 +92,7 @@ class CartControllerTest {
         Long cartId = 1L;
         CartUseCase cartUseCase = mock(CartUseCase.class);
         Cart cart = new Cart(); // Crear un objeto Cart para usar en las pruebas
-        when(cartUseCase.getCartById(cartId)).thenReturn(cart);
+        when(cartUseCase.findById(cartId)).thenReturn(cart);
 
         CartController cartController = new CartController(cartUseCase,cartMapper);
         CartDto cartDto = CartDto.builder().id(1L).build();
@@ -100,7 +110,7 @@ class CartControllerTest {
         // Arrange
         Long cartId = 2L;
         CartUseCase cartUseCase = mock(CartUseCase.class);
-        when(cartUseCase.getCartById(cartId)).thenReturn(null);
+        when(cartUseCase.findById(cartId)).thenReturn(null);
 
         CartController cartController = new CartController(cartUseCase,cartMapper);
 
@@ -116,7 +126,7 @@ class CartControllerTest {
         // Arrange
         Long cartId = 3L;
         CartUseCase cartUseCase = mock(CartUseCase.class);
-        when(cartUseCase.getCartById(cartId)).thenThrow(new RuntimeException());
+        when(cartUseCase.findById(cartId)).thenThrow(new RuntimeException());
 
         CartController cartController = new CartController(cartUseCase,cartMapper);
 

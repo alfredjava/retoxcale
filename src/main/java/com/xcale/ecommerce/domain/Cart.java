@@ -15,7 +15,7 @@ import java.util.List;
 public class Cart {
 
     private Long id;
-    private User user;
+    private Long idUser;
     private Double total;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

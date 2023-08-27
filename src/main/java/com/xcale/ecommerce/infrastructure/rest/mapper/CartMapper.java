@@ -18,6 +18,7 @@ import org.mapstruct.Mapping;
         CartMapper INSTANCE = org.mapstruct.factory.Mappers.getMapper(CartMapper.class);
 
         @Mapping(target = "cartDetailsDto", source = "cartDetails")
+        @Mapping(target = "userDto.id", source = "idUser")
         CartDto toDto(Cart cart);
 
 
@@ -30,7 +31,7 @@ import org.mapstruct.Mapping;
         List<CartDetailsDto> toDtoList(List<CartDetails> cartDetailsList);
 
         List<CartDto> toDtoListCart(List<Cart> cartList);
-        @Mapping(target = "product", source = "product")
+        @Mapping(target = "product", source = "idProduct")
         @Mapping(target = "price", source = "price")
         @Mapping(target = "quantity", source = "quantity")
         @Mapping(target = "total", source = "total")

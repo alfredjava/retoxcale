@@ -41,7 +41,7 @@ public class CartController {
     @GetMapping("/{id}")
     public ResponseEntity<CartDto> findAll(@PathVariable Long id) {
         try {
-            Cart cart =  cartUseCase.getCartById(id);
+            Cart cart =  cartUseCase.findById(id);
 
             if (cart == null) {
                 return ResponseEntity.noContent().build();

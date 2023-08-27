@@ -21,8 +21,8 @@ public class ProductRepository implements ProductPersistencePort {
     private final ProductJpaRepository productJpaRepository;
     private final ProductEntityMapper productEntityMapper;
     @Override
-    public Product findById(String id) {
-        return null;
+    public Product findById(Long id) {
+        return productEntityMapper.toDomain(productJpaRepository.findById(id).orElse(null));
     }
 
     @Override
