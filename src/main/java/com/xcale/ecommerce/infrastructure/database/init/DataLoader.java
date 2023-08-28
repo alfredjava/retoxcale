@@ -37,7 +37,7 @@ public class DataLoader implements CommandLineRunner {
         //user
         var user1 = User.builder()
                 .password("pasword")
-                .email("alfredfis@gmail.com").build();
+                .userName("alfredfis").build();
 
         userRepository.createUser(user1);
     }

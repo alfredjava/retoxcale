@@ -26,7 +26,7 @@ import java.util.List;
 
 
 
-        @Mapping(target = "email", source = "email")
+        @Mapping(target = "userName", source = "userName")
         @Mapping(target = "id", source = "id")
         UserDto toDto(User user);
 

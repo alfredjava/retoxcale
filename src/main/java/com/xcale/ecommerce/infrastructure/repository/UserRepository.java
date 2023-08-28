@@ -17,10 +17,7 @@ public class UserRepository implements com.xcale.ecommerce.domain.port.UserPersi
         return userEntityMapper.toDomain(userJpaRepository.save(userEntityMapper.toEntity(user)));
     }
 
-    @Override
-    public User findByEmail(String email) {
-        return userEntityMapper.toDomain(userJpaRepository.findByEmail(email));
-    }
+
 
     @Override
     public User findById(Long id) {

@@ -8,7 +8,7 @@ import org.mapstruct.Mapper;
 @Mapper(nullValueCheckStrategy = org.mapstruct.NullValueCheckStrategy.ALWAYS,builder = @Builder(disableBuilder = true))
 public interface UserEntityMapper {
 
-        UserEntityMapper INSTANCE = org.mapstruct.factory.Mappers.getMapper(UserEntityMapper.class);
+    UserEntityMapper INSTANCE = org.mapstruct.factory.Mappers.getMapper(UserEntityMapper.class);
 
     UserEntity toEntity(User user);
 

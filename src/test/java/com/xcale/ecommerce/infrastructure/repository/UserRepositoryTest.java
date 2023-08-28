@@ -34,17 +34,4 @@ class UserRepositoryTest {
 
         assertEquals(savedUser,user);
     }
-
-
-
-    @Test
-    public void testFindUserByUsername() {
-        when(userRepository.findByEmail(user.getEmail())).thenReturn(user);
-
-        User foundUser = userRepository.findByEmail(user.getEmail());
-
-        assertEquals(foundUser,user);
-    }
-
-
 }
