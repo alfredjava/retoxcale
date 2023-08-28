@@ -1,6 +1,8 @@
 package com.xcale.ecommerce.infrastructure.config;
 
 import com.xcale.ecommerce.infrastructure.security.jwt.JwtAuthenticationFilter;
+import org.springframework.http.HttpMethod;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -9,10 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-
-
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -32,7 +30,13 @@ public class SecurityConfig {
                                 .disable())
                 .authorizeHttpRequests(authRequest ->
                         authRequest
-                                .requestMatchers(new AntPathRequestMatcher("/auth/**")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/auth/**"),
+                                        new AntPathRequestMatcher("/v3/api-docs", HttpMethod.GET.name()),
+                                        new AntPathRequestMatcher("/swagger-ui/**", HttpMethod.GET.name()),
+                                        new AntPathRequestMatcher("/webjars/**", HttpMethod.GET.name()),
+                                        new AntPathRequestMatcher("/v3/**", HttpMethod.GET.name())
+                                )
+                                .permitAll()
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(sessionManager->
