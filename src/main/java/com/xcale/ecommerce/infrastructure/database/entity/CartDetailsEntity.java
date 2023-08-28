@@ -2,11 +2,8 @@ package com.xcale.ecommerce.infrastructure.database.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Cascade;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 
 @Builder

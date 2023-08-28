@@ -6,17 +6,19 @@ import com.xcale.ecommerce.infrastructure.rest.dto.ProductDto;
 import com.xcale.ecommerce.infrastructure.rest.mapper.ProductMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
+@ExtendWith(MockitoExtension.class)
 class ProductControllerTest {
 
     @Mock
@@ -78,5 +80,26 @@ class ProductControllerTest {
 
         // Assert
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+    }
+
+    @Test
+    void testCreateProduct() {
+        // Arrange
+        ProductUseCase productUseCase = mock(ProductUseCase.class);
+        Product product = Product.builder().id(1L).price(100.1).stock(200).build();
+
+        when(productUseCase.createProduct(product)).thenReturn(product);
+
+        ProductController productController = new ProductController(productUseCase, productMapper);
+
+        ProductDto productDto = ProductDto.builder().id(1L).price(100.1).stock(200).build();
+
+        when(productMapper.toDto(product)).thenReturn(productDto);
+        // Act
+        ResponseEntity<ProductDto> response = productController.createProduct(product);
+
+        // Assert
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(product.getId(), response.getBody().getId());
     }
 }

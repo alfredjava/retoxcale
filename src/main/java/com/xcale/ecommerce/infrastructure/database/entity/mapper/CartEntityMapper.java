@@ -5,17 +5,14 @@ import com.xcale.ecommerce.domain.CartDetails;
 import com.xcale.ecommerce.infrastructure.database.entity.CartDetailsEntity;
 import com.xcale.ecommerce.infrastructure.database.entity.CartEntity;
 import com.xcale.ecommerce.infrastructure.database.entity.ProductEntity;
-import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Component;
-
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Slf4j
 @Component
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE,
         nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,

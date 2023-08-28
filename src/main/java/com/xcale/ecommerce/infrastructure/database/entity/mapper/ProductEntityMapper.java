@@ -2,11 +2,11 @@ package com.xcale.ecommerce.infrastructure.database.entity.mapper;
 
 import com.xcale.ecommerce.domain.Product;
 import com.xcale.ecommerce.infrastructure.database.entity.ProductEntity;
-import org.mapstruct.Builder;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 
-@Mapper(nullValueCheckStrategy = org.mapstruct.NullValueCheckStrategy.ALWAYS,builder = @Builder(disableBuilder = true))
+
+@Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE,
+        nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,builder = @Builder(disableBuilder = true))
 public interface ProductEntityMapper {
 
     ProductEntityMapper INSTANCE = org.mapstruct.factory.Mappers.getMapper(ProductEntityMapper.class);

@@ -6,13 +6,15 @@ import com.xcale.ecommerce.domain.User;
 import com.xcale.ecommerce.infrastructure.rest.dto.CartDetailsDto;
 import com.xcale.ecommerce.infrastructure.rest.dto.CartDto;
 import com.xcale.ecommerce.infrastructure.rest.dto.UserDto;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.NullValueCheckStrategy;
+import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-
-    @Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE,
+        nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
     public interface CartMapper {
 
         CartMapper INSTANCE = org.mapstruct.factory.Mappers.getMapper(CartMapper.class);

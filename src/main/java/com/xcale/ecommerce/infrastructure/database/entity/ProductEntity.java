@@ -1,9 +1,11 @@
 package com.xcale.ecommerce.infrastructure.database.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -20,7 +22,7 @@ public class ProductEntity {
         @Column(unique = true)
         private String name;
         private String description;
-        private BigDecimal price;
+        private Double price;
         private String image;
         @Column(name = "count_in_stock")
         private Integer countInStock;

@@ -1,7 +1,6 @@
 package com.xcale.ecommerce.infrastructure.repository;
 
 import com.xcale.ecommerce.domain.Cart;
-import com.xcale.ecommerce.domain.CartDetails;
 import com.xcale.ecommerce.domain.Product;
 import com.xcale.ecommerce.domain.User;
 import com.xcale.ecommerce.domain.port.CartPersistencePort;
@@ -12,7 +11,6 @@ import com.xcale.ecommerce.infrastructure.database.entity.mapper.CartEntityMappe
 import com.xcale.ecommerce.infrastructure.database.entity.mapper.UserEntityMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.mapstruct.Named;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,14 +49,7 @@ public class CartRepository implements CartPersistencePort {
                 //elimino el carrito
                 cartJpaRepository.delete(cartEntity);
             }
-            Double totalCart = cart.getCartDetails().stream().mapToDouble(
-                    detalle ->{
-                        Product product = productRepository.findById(detalle.getIdProduct());
-                        detalle.setPrice(product.getPrice());
-                        detalle.setTotal(product.getPrice() * detalle.getQuantity());
-                        return detalle.getTotal();
-                    }
-            ).sum();
+            Double totalCart = getTotalCart(cart);
             cart.setTotal(totalCart);
             cartEntity = cartJpaRepository.save(cartEntityMapper.toEntity(cart));
 
@@ -77,8 +68,27 @@ public class CartRepository implements CartPersistencePort {
             return cartEntityMapper.toDomain(cartEntity);
         }catch (Exception e){
             log.error("Error creating car: {}", e.getMessage());
-            throw new MyException("Error creating cart: {}", cart.toString());
+            throw new MyException("Error creating cart: "+e.getMessage(), cart.toString());
         }
+    }
+
+    private Double getTotalCart(Cart cart) {
+        Double totalCart = cart.getCartDetails().stream().mapToDouble(
+                detalle ->{
+
+                        Product product = productRepository.findById(detalle.getIdProduct());
+                        if (product == null){
+                            log.error("Product with Id  : {}",detalle.getIdProduct(),"does not exist");
+                            throw new MyException("Product with Id  : "+detalle.getIdProduct() +" does not exist ", detalle.toString());
+                        }
+                        detalle.setPrice(product.getPrice());
+                        detalle.setTotal(product.getPrice() * detalle.getQuantity());
+
+
+                    return detalle.getTotal();
+                }
+        ).sum();
+        return totalCart;
     }
 
     @Override

@@ -6,7 +6,6 @@ import com.xcale.ecommerce.infrastructure.MyException;
 import com.xcale.ecommerce.infrastructure.exception.Throws;
 import com.xcale.ecommerce.infrastructure.rest.dto.CartDto;
 import com.xcale.ecommerce.infrastructure.rest.mapper.CartMapper;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -25,17 +24,14 @@ public class CartController {
     @PostMapping
     @Throws(MyException.class)
     public ResponseEntity<CartDto> createCart(@RequestBody Cart cart) {
-        try {
+
             CartDto cartDto =  cartMapper.toDto(cartUseCase.addCart(cart));
 
             if (cartDto == null) {
                 return new ResponseEntity<>(HttpStatus.CONFLICT);
             }
             return new ResponseEntity<>(cartDto, HttpStatus.CREATED);
-        } catch (Exception e) {
-            log.error("Error in createCart", e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+
     }
 
     @GetMapping("/{id}")

@@ -4,7 +4,6 @@ import com.xcale.ecommerce.domain.User;
 import com.xcale.ecommerce.infrastructure.database.entity.UserEntity;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 @Mapper(nullValueCheckStrategy = org.mapstruct.NullValueCheckStrategy.ALWAYS,builder = @Builder(disableBuilder = true))
 public interface UserEntityMapper {

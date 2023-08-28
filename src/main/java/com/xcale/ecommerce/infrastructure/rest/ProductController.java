@@ -42,7 +42,8 @@ public class ProductController {
     @PostMapping
     @Throws(MyException.class)
     public ResponseEntity<ProductDto> createProduct(@RequestBody Product product) {
-        return ResponseEntity.ok(productMapper.toDto(
-                productUseCase.createProduct(product)));
+        return new ResponseEntity<>(productMapper.toDto(
+                productUseCase.createProduct(product)), HttpStatus.CREATED);
+
     }
 }

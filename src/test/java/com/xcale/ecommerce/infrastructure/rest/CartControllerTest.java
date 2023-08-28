@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.xcale.ecommerce.infrastructure.rest.TestUtils.readDataFromFile;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -72,20 +72,6 @@ class CartControllerTest {
         assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
     }
 
-    @Test
-    public void testCreateCartServerError() throws MyException {
-        // Arrange
-        CartUseCase cartUseCase = mock(CartUseCase.class);
-        when(cartUseCase.addCart(any(Cart.class))).thenThrow(new MyException("Error save",""));
-
-        CartController cartController = new CartController(cartUseCase,cartMapper);
-
-        // Act
-        ResponseEntity<CartDto> response = cartController.createCart(new Cart());
-
-        // Assert
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-    }
     @Test
     public void testFindAllSuccess() {
         // Arrange
