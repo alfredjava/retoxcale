@@ -20,9 +20,11 @@ spring:
     driver-class-name: org.h2.Driver
     username: root
     password: 12345
-  h2:
-    console:
-      enabled: true
+
+token:
+  signing:
+    key: 586E3272357538782F413F4428472B4B6250655368566B597033733676397924
+    expiration: 5 #in minute
 
 cron:
   in-minute-remove-cart-inactive: 10

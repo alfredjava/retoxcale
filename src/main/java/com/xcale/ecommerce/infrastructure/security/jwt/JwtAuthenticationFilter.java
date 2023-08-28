@@ -12,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -30,7 +31,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-       try {
            final String token = getTokenFromRequest(request);
            final String username;
 
@@ -60,12 +60,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
            }
            filterChain.doFilter(request, response);
-       }catch (io.jsonwebtoken.ExpiredJwtException e){
-           log.error("Error doFilterInternal", e.getMessage());
-           throw new MyException("token expired", "");
-       }catch (Exception e){
-           throw new MyException(e.getMessage(), "");
-       }
+
 
     }
 

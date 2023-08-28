@@ -6,6 +6,7 @@ import com.xcale.ecommerce.infrastructure.repository.ProductRepository;
 import com.xcale.ecommerce.infrastructure.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -16,7 +17,7 @@ public class DataLoader implements CommandLineRunner {
 
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
-
+    private final PasswordEncoder passwordEncoder;
     @Override
     public void run(String... args) throws Exception {
         var product1 =  Product.builder()
@@ -34,9 +35,12 @@ public class DataLoader implements CommandLineRunner {
 
 
         productRepository.saveAll(Arrays.asList(product1,product2));
+
+        String encodedPassword = passwordEncoder.encode("pasword");
         //user
         var user1 = User.builder()
-                .password("pasword")
+                .password(encodedPassword)
+                .role("USER")
                 .userName("alfredfis").build();
 
         userRepository.createUser(user1);

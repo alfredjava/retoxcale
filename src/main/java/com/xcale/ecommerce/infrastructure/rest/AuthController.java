@@ -1,5 +1,7 @@
 package com.xcale.ecommerce.infrastructure.rest;
 
+import com.xcale.ecommerce.infrastructure.MyException;
+import com.xcale.ecommerce.infrastructure.exception.Throws;
 import com.xcale.ecommerce.infrastructure.security.auth.AuthResponse;
 import com.xcale.ecommerce.infrastructure.security.auth.AuthService;
 import com.xcale.ecommerce.infrastructure.security.auth.LoginRequest;
@@ -19,6 +21,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping(value = "login")
+    @Throws(MyException.class)
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request)
     {
         return ResponseEntity.ok(authService.login(request));
