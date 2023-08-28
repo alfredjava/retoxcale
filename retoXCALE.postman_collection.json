@@ -8,6 +8,16 @@
 		{
 			"name": "listProductALL",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbGZyZWQxIiwiaWF0IjoxNjkzMTk4NzgxLCJleHAiOjE2OTMyMDAyMjF9.kzF2ezjejiDGk3arNUSDXd08nft3q2OpPuSALnwdorQ",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -78,11 +88,21 @@
 		{
 			"name": "saveCart",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbGZyZWRmaXMiLCJpYXQiOjE2OTMyMTA2NzIsImV4cCI6MTY5MzIxMDk3Mn0.7YOAHeU5TZK9Uis2rqXs6qiWNpUx1tw7BkxXxbP3Zus",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"user\": {\n        \"email\": \"alfredfis@gmail.com\"\n    },\n    \"cartDetails\": [\n        {\n            \"product\": \"iphone13\",\n            \"quantity\": 1\n        },\n        {\n            \"product\": \"iphone14\",\n            \"quantity\": 1\n        }\n    ]\n}",
+					"raw": "{\n    \"cartDetails\": [\n        {\n            \"idProduct\": 1,\n            \"quantity\": 1\n        },\n        {\n            \"idProduct\": 2,\n            \"quantity\": 4\n        }\n    ]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -99,6 +119,64 @@
 					"path": [
 						"api",
 						"cart"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\" : \"abarrios\",\n    \"password\":\"Hola1\",\n    \"firstName\":\"Alfredo\",\n    \"lastName\":\"Barrios\"\n    \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\" : \"alfredfis\",\n    \"password\":\"pasword\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"login"
 					]
 				}
 			},

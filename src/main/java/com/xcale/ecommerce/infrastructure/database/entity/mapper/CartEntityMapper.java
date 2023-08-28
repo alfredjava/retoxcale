@@ -47,7 +47,7 @@ public abstract class CartEntityMapper {
         return  ProductEntity.builder().id(idProduct).build();
     }
 
-
+    @Mapping(target = "userName", source = "userEntity.username")
     @Mapping(target = "idUser", source = "userEntity.id")
     @Mapping(target = "cartDetails", source = "cartDetailsEntities",qualifiedByName = "mapDetailsCartDomain")
     @Mapping(target = "createdAt", source = "createdAt")

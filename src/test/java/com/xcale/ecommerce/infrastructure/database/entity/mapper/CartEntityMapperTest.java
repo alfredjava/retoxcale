@@ -4,10 +4,8 @@ import com.xcale.ecommerce.domain.Cart;
 import com.xcale.ecommerce.domain.CartDetails;
 import com.xcale.ecommerce.infrastructure.database.entity.CartDetailsEntity;
 import com.xcale.ecommerce.infrastructure.database.entity.CartEntity;
-import com.xcale.ecommerce.infrastructure.repository.ProductRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
@@ -21,12 +19,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @ExtendWith(MockitoExtension.class)
 class CartEntityMapperTest {
 
-    @Mock
-    private ProductEntityMapper productEntityMapper;
-
-    @Mock
-    private ProductRepository productRepository;
-
 
     CartEntityMapper cartEntityMapper = CartEntityMapper.INSTANCE;
 
@@ -34,8 +26,9 @@ class CartEntityMapperTest {
     void testToEntity() {
         // Given
         CartDetails cartItem = new CartDetails(1L, 10.2,2,100.3);
-        Cart cart = new Cart(1L, 1L,10.2, LocalDateTime.now(),LocalDateTime.now(),
-                Collections.singletonList(cartItem));
+        Cart cart =  Cart.builder().id(1L).idUser(1L).createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now()).cartDetails(Collections.singletonList(cartItem)).build();
+
 
 
         // When

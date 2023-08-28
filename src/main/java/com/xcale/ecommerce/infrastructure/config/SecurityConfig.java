@@ -32,6 +32,7 @@ public class SecurityConfig {
                         authRequest
                                 .requestMatchers(new AntPathRequestMatcher("/auth/**"),
                                         new AntPathRequestMatcher("/v3/api-docs", HttpMethod.GET.name()),
+                                        new AntPathRequestMatcher("/swagger-ui.html", HttpMethod.GET.name()),
                                         new AntPathRequestMatcher("/swagger-ui/**", HttpMethod.GET.name()),
                                         new AntPathRequestMatcher("/webjars/**", HttpMethod.GET.name()),
                                         new AntPathRequestMatcher("/v3/**", HttpMethod.GET.name())

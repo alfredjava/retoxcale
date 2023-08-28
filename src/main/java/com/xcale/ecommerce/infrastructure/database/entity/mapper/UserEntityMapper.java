@@ -13,6 +13,6 @@ public interface UserEntityMapper {
     @Mapping(target = "role",source = "role")
     @Mapping(target = "username",source = "userName")
     UserEntity toEntity(User user);
-
+    @Mapping(target = "password", ignore = true)
     User toDomain(UserEntity save);
 }

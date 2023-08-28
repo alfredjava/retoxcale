@@ -3,8 +3,10 @@ package com.xcale.ecommerce.infrastructure.rest;
 import com.xcale.ecommerce.application.CartUseCase;
 import com.xcale.ecommerce.domain.Cart;
 import com.xcale.ecommerce.infrastructure.MyException;
+import com.xcale.ecommerce.infrastructure.database.entity.mapper.CartEntityMapper;
 import com.xcale.ecommerce.infrastructure.rest.dto.CartDetailsDto;
 import com.xcale.ecommerce.infrastructure.rest.dto.CartDto;
+import com.xcale.ecommerce.infrastructure.rest.dto.CartRequestDto;
 import com.xcale.ecommerce.infrastructure.rest.mapper.CartMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,35 +28,41 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class CartControllerTest {
-    @Mock
-    private CartMapper cartMapper;
+    //@Mock
+    //private CartMapper cartMapper;
+    CartMapper cartMapper = CartMapper.INSTANCE;
     @BeforeEach
     public void init(){
-        cartMapper =   mock(CartMapper.class);
+
+        //cartMapper =   mock(CartMapper.class);
     }
     @Test
     void createCart() throws IOException {
 
         CartUseCase cartUseCase = mock(CartUseCase.class);
-        Cart cart = readDataFromFile("request_cart.json",Cart.class); // Crear un objeto Cart para usar en las pruebas
+        CartController cartController = new CartController(cartUseCase,cartMapper);
+        CartRequestDto cartRequestDto = readDataFromFile("request_cart.json", CartRequestDto.class); // Crear un objeto Cart para usar en las pruebas
+        Cart cart = cartMapper.toDomain(cartRequestDto);
+        cart.setId(1L);
         when(cartUseCase.addCart(any(Cart.class))).thenReturn(cart);
 
-        CartController cartController = new CartController(cartUseCase,cartMapper);
-        CartDetailsDto cartDetailsDto = CartDetailsDto.builder().price(10.0).total(100.0)
+
+        CartDetailsDto cartDetailsDto = CartDetailsDto.builder().idProduct(1L).quantity(1).price(10.0).total(100.0)
                 .build();
         List<CartDetailsDto> listCa = new ArrayList<>() ;
         listCa.add(cartDetailsDto);
         CartDto cartDto = CartDto.builder().id(1L).cartDetailsDto(listCa).
         build();
-        when(cartMapper.toDto(cart)).thenReturn(cartDto);
         // Act
-        ResponseEntity<CartDto> response = cartController.createCart(cart);
+        ResponseEntity<CartDto> response = cartController.createCart(cartRequestDto);
 
         // Assert
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals(cartDto.getId(), response.getBody().getId());
-        assertEquals(cartDto.getCartDetailsDto().get(0).getPrice(),
-                response.getBody().getCartDetailsDto().get(0).getPrice());
+        assertEquals(cartDto.getCartDetailsDto().get(0).getIdProduct(),
+                response.getBody().getCartDetailsDto().get(0).getIdProduct());
+        assertEquals(cartDto.getCartDetailsDto().get(0).getQuantity(),
+                response.getBody().getCartDetailsDto().get(0).getQuantity());
     }
 
     @Test
@@ -66,7 +74,7 @@ class CartControllerTest {
         CartController cartController = new CartController(cartUseCase,cartMapper);
 
         // Act
-        ResponseEntity<CartDto> response = cartController.createCart(new Cart());
+        ResponseEntity<CartDto> response = cartController.createCart(new CartRequestDto());
 
         // Assert
         assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
@@ -77,12 +85,11 @@ class CartControllerTest {
         // Arrange
         Long cartId = 1L;
         CartUseCase cartUseCase = mock(CartUseCase.class);
-        Cart cart = new Cart(); // Crear un objeto Cart para usar en las pruebas
+        Cart cart = Cart.builder().id(1L).build(); // Crear un objeto Cart para usar en las pruebas
         when(cartUseCase.findById(cartId)).thenReturn(cart);
 
         CartController cartController = new CartController(cartUseCase,cartMapper);
         CartDto cartDto = CartDto.builder().id(1L).build();
-        when(cartMapper.toDto(cart)).thenReturn(cartDto);
         // Act
         ResponseEntity<CartDto> response = cartController.findAll(cartId);
 

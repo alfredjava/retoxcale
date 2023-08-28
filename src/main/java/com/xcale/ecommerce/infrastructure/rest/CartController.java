@@ -5,6 +5,7 @@ import com.xcale.ecommerce.domain.Cart;
 import com.xcale.ecommerce.infrastructure.MyException;
 import com.xcale.ecommerce.infrastructure.exception.Throws;
 import com.xcale.ecommerce.infrastructure.rest.dto.CartDto;
+import com.xcale.ecommerce.infrastructure.rest.dto.CartRequestDto;
 import com.xcale.ecommerce.infrastructure.rest.mapper.CartMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,9 +24,10 @@ public class CartController {
 
     @PostMapping
     @Throws(MyException.class)
-    public ResponseEntity<CartDto> createCart(@RequestBody Cart cart) {
+    public ResponseEntity<CartDto> createCart(@RequestBody CartRequestDto cartRequestDto) {
 
-            CartDto cartDto =  cartMapper.toDto(cartUseCase.addCart(cart));
+
+            CartDto cartDto =  cartMapper.toDto(cartUseCase.addCart(cartMapper.toDomain(cartRequestDto)));
 
             if (cartDto == null) {
                 return new ResponseEntity<>(HttpStatus.CONFLICT);

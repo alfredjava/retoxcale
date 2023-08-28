@@ -7,10 +7,13 @@ import com.xcale.ecommerce.domain.port.CartPersistencePort;
 import com.xcale.ecommerce.infrastructure.MyException;
 import com.xcale.ecommerce.infrastructure.database.entity.CartDetailsEntity;
 import com.xcale.ecommerce.infrastructure.database.entity.CartEntity;
+import com.xcale.ecommerce.infrastructure.database.entity.UserEntity;
 import com.xcale.ecommerce.infrastructure.database.entity.mapper.CartEntityMapper;
 import com.xcale.ecommerce.infrastructure.database.entity.mapper.UserEntityMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,8 +31,6 @@ public class CartRepository implements CartPersistencePort {
     private final CartDetailsJpaRepository cartDetailsJpaRepository;
     private final CartEntityMapper cartEntityMapper;
     private final ProductRepository productRepository;
-    private final UserRepository userRepository;
-    private final UserEntityMapper userEntityMapper;
 
 
     @Override
@@ -37,13 +38,10 @@ public class CartRepository implements CartPersistencePort {
     public Cart saveCart(Cart cart) {
         try {
 
-            User user = userRepository.findById(cart.getIdUser());
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            UserEntity userEntity = (UserEntity)authentication.getPrincipal();
 
-            if (user == null) {
-                throw new MyException("User exits by id :" + cart.getIdUser() +" dont exist ", user.toString());
-            }
-
-            CartEntity cartEntity = cartJpaRepository.findCartEntityByUserEntity(userEntityMapper.toEntity(user));
+            CartEntity cartEntity = cartJpaRepository.findCartEntityByUserEntity(userEntity);
 
             if (cartEntity != null){
                 //elimino el carrito
@@ -65,6 +63,7 @@ public class CartRepository implements CartPersistencePort {
                         return cartDetailsEntity;
                     }).collect(Collectors.toList()));
             cartEntity.setCartDetailsEntities(listCartDet);
+            cartEntity.setUserEntity(userEntity);
             return cartEntityMapper.toDomain(cartEntity);
         }catch (Exception e){
             log.error("Error creating car: {}", e.getMessage());

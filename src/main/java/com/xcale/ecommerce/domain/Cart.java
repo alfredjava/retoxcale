@@ -15,8 +15,11 @@ public class Cart {
 
     private Long id;
     private Long idUser;
+    private String userName;
     private Double total;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private List<CartDetails> cartDetails;
+
+
 }
